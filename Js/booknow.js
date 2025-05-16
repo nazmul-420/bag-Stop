@@ -1,4 +1,6 @@
+
 document.addEventListener("DOMContentLoaded", function () {
+    validations();
     // Initialize with default dates from the image
     // const defaultDropoff = new Date().getDate().Date;
     // const defaultPickup = new Date().getDate().Date + 1;
@@ -14,8 +16,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let bagsCount = 1;
 
     // Set default dates
-    document.getElementById("dropoff-date").value = defaultDropoff;
-    document.getElementById("pickup-date").value = defaultPickupDate;
+    //document.getElementById("dropoff-date").value = defaultDropoff;
+    //document.getElementById("pickup-date").value = defaultPickupDate;
 
     // Set min date to today
     const today = new Date();
@@ -38,7 +40,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 const option = document.createElement("option");
                 option.value = timeStr;
                 option.textContent = timeStr;
-                select.appendChild(option);
+                if (timeStr !== "24:30") {
+                    select.appendChild(option);
+                }
             }
         }
     });
@@ -117,10 +121,17 @@ document.addEventListener("DOMContentLoaded", function () {
     // Set up event listeners for changes
     document
         .getElementById("dropoff-date")
-        .addEventListener("change", updateSummaryDisplay);
+        .addEventListener("change", function () {
+            updateSummaryDisplay();
+            updateDateValidation();
+        });
+    // document
+    //   .getElementById("dropoff-date")
+    //   .addEventListener("change", updateSummaryDisplay);
     document
         .getElementById("dropoff-time")
         .addEventListener("change", updateSummaryDisplay);
+
     document
         .getElementById("pickup-date")
         .addEventListener("change", updateSummaryDisplay);
@@ -133,16 +144,21 @@ document.addEventListener("DOMContentLoaded", function () {
     document
         .getElementById("flexible")
         .addEventListener("change", updateTotal);
+    document
+        .getElementById("email")
+        .addEventListener("change", validations);
+
+    document
+        .getElementById("phone")
+        .addEventListener("change", validations);
+    document.getElementById("name").addEventListener("change", validations);
 
     // Book button click handler
     document
         .getElementById("book-btn")
         .addEventListener("click", function () {
             if (validateBooking()) {
-                alert(
-                    `Booking confirmed for ${bagsCount} bag(s)! Total: ${document.getElementById("total-amount").textContent
-                    }. Thank you for choosing Kings Cross Luggage.`
-                );
+                //
             }
         });
 
@@ -207,6 +223,7 @@ function updateSummaryDisplay() {
     document.getElementById("summary-days").textContent = days;
 
     updateTotal();
+    validations();
 }
 
 function updateTotal() {
@@ -277,4 +294,47 @@ function validateBooking() {
     }
 
     return true;
+}
+
+function validations() {
+    let dropDate = document.getElementById("dropoff-date").value;
+    let dropTime = document.getElementById("dropoff-time").value;
+    let pickupDate = document.getElementById("pickup-date").value;
+    let pickupTime = document.getElementById("pickup-time").value;
+    let name = document.getElementById("name").value;
+    let phone = document.getElementById("phone").value;
+    let email = document.getElementById("email").value;
+    console.log(
+        dropDate,
+        dropTime,
+        pickupDate,
+        pickupTime,
+        name,
+        phone,
+        email
+    );
+    if (
+        dropDate != "" &&
+        dropTime != "" &&
+        pickupDate != "" &&
+        pickupTime != "" &&
+        name != "" &&
+        phone != "" &&
+        email != ""
+    ) {
+        //document.getElementById("book-btn").disabled = false;
+        let button = document.getElementById("book-btn");
+        button.disabled = false;
+        button.style.backgroundColor = ""; // Reset to default
+        button.style.cursor = "";
+    } else {
+        let button = document.getElementById("book-btn");
+        button.disabled = true;
+        button.style.backgroundColor = "#ccc";
+        button.style.cursor = "not-allowed";
+    }
+}
+function updateDateValidation() {
+    let currentDropDate = document.getElementById("dropoff-date").value;
+    document.getElementById("pickup-date").min = currentDropDate;
 }
