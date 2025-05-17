@@ -36,10 +36,9 @@
 }
 
 .bag-row {
-  display: flex;
+  /* display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-top: 10px;
+  align-items: center; */
 }
 
 .bag-counter {

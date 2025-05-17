@@ -144,14 +144,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document
         .getElementById("flexible")
         .addEventListener("change", updateTotal);
-    document
-        .getElementById("email")
-        .addEventListener("change", validations);
 
-    document
-        .getElementById("phone")
-        .addEventListener("change", validations);
-    document.getElementById("name").addEventListener("change", validations);
+    // document.getElementById("email").addEventListener("change", validations);
+    // document.getElementById("phone").addEventListener("change", validations);
+    // document.getElementById("name").addEventListener("change", validations);
 
     // Book button click handler
     document
@@ -301,26 +297,21 @@ function validations() {
     let dropTime = document.getElementById("dropoff-time").value;
     let pickupDate = document.getElementById("pickup-date").value;
     let pickupTime = document.getElementById("pickup-time").value;
-    let name = document.getElementById("name").value;
-    let phone = document.getElementById("phone").value;
-    let email = document.getElementById("email").value;
+    // let name = document.getElementById("name").value;
+    // let phone = document.getElementById("phone").value;
+    // let email = document.getElementById("email").value;
     console.log(
         dropDate,
         dropTime,
         pickupDate,
         pickupTime,
-        name,
-        phone,
-        email
+
     );
     if (
-        dropDate != "" &&
-        dropTime != "" &&
-        pickupDate != "" &&
-        pickupTime != "" &&
-        name != "" &&
-        phone != "" &&
-        email != ""
+        dropDate != "" && dropTime != "" && pickupDate != "" && pickupTime != ""
+        // name != "" &&
+        // phone != "" &&
+        // email != ""
     ) {
         //document.getElementById("book-btn").disabled = false;
         let button = document.getElementById("book-btn");
